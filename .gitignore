@@ -1,0 +1,7 @@
+/database/*.sqlite
+/database/*.sqlite-wal
+/database/*.sqlite-shm
+/public/uploads/products/*
+!/public/uploads/products/*.svg
+.DS_Store
+Thumbs.db

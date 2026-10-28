@@ -1,0 +1,13 @@
+RewriteEngine On
+
+RewriteRule ^(app|database)(/|$) - [F,L]
+RewriteRule ^(schema|seed)\.sql$ - [F,L]
+
+RewriteRule ^public/ - [L]
+
+RewriteRule ^$ public/ [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/$1 [L]
+
+Options -Indexes

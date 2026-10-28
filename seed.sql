@@ -1,0 +1,6 @@
+-- Seed data is applied by app/db.php on first run (so the admin
+-- password can be hashed with password_hash). Default login:
+--   username: admin
+--   password: solangebox
+--
+-- Re-run locally by deleting database/solange.sqlite and reloading the shop.
