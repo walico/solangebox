@@ -3,8 +3,8 @@ $images = $product['images'] ?? [];
 $image = $images[0]['path'] ?? null;
 $onSale = !empty($product['sale_price']) && (int) $product['sale_price'] < (int) $product['price'];
 $blurb = trim((string) ($product['description'] ?? ''));
-if (strlen($blurb) > 90) {
-    $blurb = rtrim(substr($blurb, 0, 87)) . '...';
+if (strlen($blurb) > 40) {
+    $blurb = rtrim(substr($blurb, 0, 40)) . '...';
 }
 $filter = $product['filter'] ?? ($product['category_slug'] ?? '');
 ?>

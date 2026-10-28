@@ -7,8 +7,15 @@ require dirname(__DIR__) . '/app/bootstrap.php';
 $router = new Router();
 
 $router->get('/', [StoreController::class, 'home']);
+$router->get('/shop', [StoreController::class, 'shop']);
+$router->get('/collections', [StoreController::class, 'collections']);
+$router->get('/blog', [StoreController::class, 'blog']);
+$router->get('/blog/{slug}', [StoreController::class, 'blogPost']);
 $router->get('/about', [StoreController::class, 'about']);
 $router->get('/contact', [StoreController::class, 'contact']);
+$router->post('/contact', [StoreController::class, 'sendContact']);
+$router->get('/delivery', [StoreController::class, 'delivery']);
+$router->post('/newsletter', [StoreController::class, 'newsletter']);
 $router->get('/search', [StoreController::class, 'search']);
 $router->get('/category/{slug}', [StoreController::class, 'category']);
 $router->get('/product/{slug}', [StoreController::class, 'product']);

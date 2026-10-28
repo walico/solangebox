@@ -1,21 +1,20 @@
 (() => {
     const toggle = document.querySelector('.nav-toggle');
-    const drop = document.querySelector('.nav-drop');
-    if (toggle && drop) {
-        toggle.addEventListener('click', () => {
-            const open = drop.classList.toggle('is-open');
-            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-            const button = drop.querySelector('button');
-            if (button) button.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
+    const closeBtn = document.querySelector('.nav-close');
+    const nav = document.querySelector('#site-nav');
+    const backdrop = document.querySelector('.nav-backdrop');
+    const setNav = (open) => {
+        if (!nav) return;
+        nav.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+        if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (backdrop) backdrop.hidden = !open;
+    };
+    if (toggle) {
+        toggle.addEventListener('click', () => setNav(!nav?.classList.contains('is-open')));
     }
-    document.querySelectorAll('.nav-drop > button').forEach((button) => {
-        button.addEventListener('click', () => {
-            const parent = button.parentElement;
-            const open = parent.classList.toggle('is-open');
-            button.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-    });
+    if (closeBtn) closeBtn.addEventListener('click', () => setNav(false));
+    if (backdrop) backdrop.addEventListener('click', () => setNav(false));
 
     const slides = [...document.querySelectorAll('.hero-slide')];
     let heroIndex = 0;
@@ -50,7 +49,10 @@
         });
     }
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') closeSearch();
+        if (event.key === 'Escape') {
+            closeSearch();
+            setNav(false);
+        }
     });
 
     document.querySelectorAll('.wish-btn').forEach((button) => {

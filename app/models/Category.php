@@ -41,6 +41,34 @@ final class Category
         return $stmt->fetchAll();
     }
 
+    public static function rootsWithCovers(): array
+    {
+        $roots = self::roots();
+        foreach ($roots as &$category) {
+            $ids = self::descendantIds((int) $category['id']);
+            $placeholders = [];
+            $params = ['status' => 'active'];
+            foreach ($ids as $i => $id) {
+                $key = 'id' . $i;
+                $placeholders[] = ':' . $key;
+                $params[$key] = $id;
+            }
+            $stmt = db()->prepare(
+                'SELECT pi.path
+                 FROM products p
+                 JOIN product_images pi ON pi.product_id = p.id
+                 WHERE p.status = :status AND p.category_id IN (' . implode(',', $placeholders) . ')
+                 ORDER BY p.id ASC, pi.sort_order ASC
+                 LIMIT 1'
+            );
+            $stmt->execute($params);
+            $category['image'] = $stmt->fetchColumn() ?: null;
+        }
+        unset($category);
+
+        return $roots;
+    }
+
     public static function find(int $id): ?array
     {
         $stmt = db()->prepare('SELECT * FROM categories WHERE id = :id');

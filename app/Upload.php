@@ -50,14 +50,15 @@ final class Upload
         }
 
         $dir = PUBLIC_PATH . '/uploads/' . $folder;
-        if (!is_dir($dir)) {
-            mkdir($dir, 0755, true);
+        if (!is_dir($dir) && !mkdir($dir, 0777, true) && !is_dir($dir)) {
+            throw new RuntimeException('Could not create the uploads folder.');
         }
+        @chmod($dir, 0777);
 
         $name = unique_token(16) . '.' . $mimes[$mime];
         $dest = $dir . '/' . $name;
-        if (!move_uploaded_file($tmp, $dest)) {
-            throw new RuntimeException('Could not save the uploaded image.');
+        if (!is_writable($dir) || !move_uploaded_file($tmp, $dest)) {
+            throw new RuntimeException('Could not save the uploaded image. Check that public/uploads/products is writable.');
         }
 
         return 'uploads/' . $folder . '/' . $name;

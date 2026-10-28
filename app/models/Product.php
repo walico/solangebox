@@ -162,6 +162,9 @@ final class Product
         if (!empty($filters['in_stock'])) {
             $where[] = 'p.stock > 0';
         }
+        if (!empty($filters['on_sale'])) {
+            $where[] = 'p.sale_price IS NOT NULL AND p.sale_price < p.price';
+        }
         $stock = (string) ($filters['stock'] ?? '');
         if ($stock === 'out') {
             $where[] = 'p.stock <= 0';
