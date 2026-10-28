@@ -29,11 +29,9 @@ $error = flash('error');
                     <img class="brand-wordmark" src="<?= e(asset('images/logo-wordmark-dark.png')) ?>" alt="<?= e($shop) ?>">
                 </a>
                 <div class="top-links">
-                    <a class="text-link" href="<?= e(url('about')) ?>">About</a>
-                    <a class="text-link" href="<?= e(url('contact')) ?>">Contact</a>
-                    <a class="icon-btn" href="<?= e(url('contact')) ?>" aria-label="Notices">
+                    <!-- <a class="icon-btn" href="<?= e(url('contact')) ?>" aria-label="Notices">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2H4.5L6 16z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 19a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-                    </a>
+                    </a> -->
                     <a class="icon-btn cart-link" href="<?= e(url('cart')) ?>" aria-label="Cart">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8h11l-1 11h-9l-1-11z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 8V7.2A3 3 0 0 1 12 4a3 3 0 0 1 3 3.2V8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
                         <?php if (Cart::count() > 0): ?><span class="cart-count"><?= (int) Cart::count() ?></span><?php endif; ?>
@@ -41,39 +39,44 @@ $error = flash('error');
                     <a class="icon-btn" href="<?= e(url('about')) ?>" aria-label="Account">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 19.2c1.4-2.6 3.6-3.7 6.5-3.7s5.1 1.1 6.5 3.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
                     </a>
-                    <a class="icon-btn search-link" href="<?= e(url('search')) ?>" aria-label="Search">
+                    <button class="icon-btn search-open" type="button" aria-label="Search" aria-controls="search-modal" aria-expanded="false">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16.5L20 20.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                    </a>
+                    </button>
                 </div>
             </div>
             <nav class="subnav" id="site-nav">
-                <div class="nav-left">
-                    <div class="nav-drop">
-                        <button class="nav-chip" type="button" aria-expanded="false">
-                            Clothing
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-                        </button>
-                        <div class="nav-menu">
-                            <?php foreach ($categories as $navCat): ?>
-                                <a href="<?= e(url('category/' . $navCat['slug'])) ?>"><?= e($navCat['name']) ?></a>
-                            <?php endforeach; ?>
-                        </div>
+                <div class="nav-drop">
+                    <button class="nav-chip" type="button" aria-expanded="false" aria-controls="site-menu">
+                        Menu
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                    </button>
+                    <div class="nav-menu" id="site-menu">
+                        <a href="<?= e(url()) ?>" class="<?= is_active('/') ? 'is-active' : '' ?>">Home</a>
+                        <a href="<?= e(url()) ?>#browse">New Arrivals</a>
+                        <a href="<?= e(url()) ?>?sale=1#browse">Sale</a>
+                        <a href="<?= e(url('about')) ?>" class="<?= is_active('about') ? 'is-active' : '' ?>">About</a>
+                        <a href="<?= e(url('contact')) ?>" class="<?= is_active('contact') ? 'is-active' : '' ?>">Contact</a>
+                        <a href="<?= e(url('cart')) ?>" class="<?= is_active('cart') ? 'is-active' : '' ?>">Cart</a>
                     </div>
-                    <a class="nav-chip" href="<?= e(url()) ?>#browse">New Arrivals</a>
-                    <a class="nav-chip" href="<?= e(url()) ?>?sale=1#browse">Sale</a>
                 </div>
-                <form class="sub-search" action="<?= e(url('search')) ?>" method="get">
-                    <input type="search" name="q" placeholder="Search..." value="<?= e($_GET['q'] ?? '') ?>" aria-label="Search">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16.5L20 20.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                </form>
-                <div class="nav-right">
-                    <?php foreach ($categories as $navCat): ?>
-                        <?php if ($navCat['slug'] === 'clothing') continue; ?>
-                        <a class="nav-chip <?= is_active('category/' . $navCat['slug']) ? 'is-active' : '' ?>" href="<?= e(url('category/' . $navCat['slug'])) ?>"><?= e($navCat['name']) ?></a>
-                    <?php endforeach; ?>
-                </div>
+                <a class="nav-chip" href="<?= e(url()) ?>#browse">New Arrivals</a>
+                <a class="nav-chip" href="<?= e(url()) ?>?sale=1#browse">Sale</a>
+                <?php foreach ($categories as $navCat): ?>
+                    <?php if ($navCat['slug'] === 'clothing') continue; ?>
+                    <a class="nav-chip <?= is_active('category/' . $navCat['slug']) ? 'is-active' : '' ?>" href="<?= e(url('category/' . $navCat['slug'])) ?>"><?= e($navCat['name']) ?></a>
+                <?php endforeach; ?>
             </nav>
         </header>
+        <div class="search-modal" id="search-modal" hidden>
+            <div class="search-modal-card" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+                <h2 id="search-modal-title">Search</h2>
+                <form action="<?= e(url('search')) ?>" method="get">
+                    <input type="search" name="q" placeholder="Search the shop" value="<?= e($_GET['q'] ?? '') ?>" aria-label="Search">
+                    <button class="btn btn-gold" type="submit">Search</button>
+                </form>
+                <button class="search-close" type="button" aria-label="Close search">&times;</button>
+            </div>
+        </div>
 
         <main>
             <?php if ($success || $error): ?>

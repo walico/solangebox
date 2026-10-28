@@ -28,6 +28,31 @@
         button.addEventListener('click', () => showHero(heroIndex + Number(button.dataset.hero)));
     });
 
+    const searchModal = document.querySelector('#search-modal');
+    const searchOpen = document.querySelector('.search-open');
+    const searchClose = document.querySelector('.search-close');
+    const openSearch = () => {
+        if (!searchModal) return;
+        searchModal.hidden = false;
+        if (searchOpen) searchOpen.setAttribute('aria-expanded', 'true');
+        searchModal.querySelector('input')?.focus();
+    };
+    const closeSearch = () => {
+        if (!searchModal) return;
+        searchModal.hidden = true;
+        if (searchOpen) searchOpen.setAttribute('aria-expanded', 'false');
+    };
+    if (searchOpen) searchOpen.addEventListener('click', openSearch);
+    if (searchClose) searchClose.addEventListener('click', closeSearch);
+    if (searchModal) {
+        searchModal.addEventListener('click', (event) => {
+            if (event.target === searchModal) closeSearch();
+        });
+    }
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeSearch();
+    });
+
     document.querySelectorAll('.wish-btn').forEach((button) => {
         button.addEventListener('click', () => {
             const on = button.classList.toggle('is-on');
