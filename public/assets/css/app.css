@@ -222,7 +222,7 @@ label > textarea { margin-top: 0.35rem; }
 
 .hero-banner {
     position: relative;
-    width: min(1240px, calc(100% - 2.4rem));
+    width: min(1440px, calc(100% - 2.4rem));
     margin: 2.5rem auto 0;
     height: 550px;
     border-radius: 26px;
@@ -234,7 +234,7 @@ label > textarea { margin-top: 0.35rem; }
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.7s ease;
 }
 .hero-slide.is-on { opacity: 1; }
 .hero-photo { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
@@ -944,6 +944,12 @@ label > textarea { margin-top: 0.35rem; }
     font-size: 0.8rem;
     color: #c8b8ad;
 }
+.footer-credit a {
+    color: #f4ebe3;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+}
+.footer-credit a:hover { color: var(--bronze); }
 
 .flashes { padding: 1rem 0 0; }
 .flash { padding: 0.75rem 0.9rem; margin-bottom: 0.6rem; border: 1px solid var(--line); }
@@ -1371,7 +1377,7 @@ label > textarea { margin-top: 0.35rem; }
     .newsletter { width: calc(100% - 1.4rem); }
     .promo-card { grid-template-columns: 1fr auto; }
     .newsletter-card { padding: 1.1rem; border-radius: 24px; }
-    .hero-banner { height: 400px; width: calc(100% - 1.2rem); border-radius: 18px; }
+    .hero-banner { height: 400px; width: calc(100% - 0.5rem); border-radius: 18px; }
     .hero-copy { padding: 1.25rem 1rem 0; max-width: none; }
     .hero-copy h1 { font-size: 1.85rem; }
     .hero-lead { font-size: 0.82rem; max-width: 16rem; }
@@ -1395,4 +1401,39 @@ label > textarea { margin-top: 0.35rem; }
     .page-banner,
     .mid-banner { min-height: 240px; border-radius: 18px; }
     .catalog-grid { grid-template-columns: 1fr; }
+}
+
+@keyframes rise-in {
+    from { opacity: 0; transform: translate3d(0, 18px, 0); }
+    to { opacity: 1; transform: none; }
+}
+.hero-copy { animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-cta { animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both; }
+.js-motion .reveal {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition:
+        opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+.js-motion .reveal.is-in {
+    opacity: 1;
+    transform: none;
+}
+.js-motion .hero-photo,
+.js-motion .mid-banner img,
+.js-motion .page-banner img,
+.js-motion .list-banner-media img {
+    will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-copy,
+    .hero-cta { animation: none; }
+    .js-motion .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }

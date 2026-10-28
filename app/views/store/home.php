@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="hero-slide">
-        <img class="hero-photo hero-photo-alt" src="<?= e(asset('images/hero-rack.png')) ?>" alt="">
+        <img class="hero-photo hero-photo-alt" src="<?= e(asset('images/hero-rack2.jpg')) ?>" alt="">
         <div class="hero-shade"></div>
         <div class="hero-copy">
             <h1>New arrivals.</h1>
@@ -36,7 +36,6 @@
                 <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
         </a>
-        <a class="hero-more" href="#browse">Top Collection</a>
     </div>
 </section>
 

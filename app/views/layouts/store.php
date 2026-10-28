@@ -143,7 +143,7 @@ $returnPath = ltrim(current_path(), '/');
                 </div>
                 <div class="container footer-base">
                     <span>&copy; <?= date('Y') ?> <?= e($shop) ?>. All Rights Reserved.</span>
-                    <span><?= e($tagline) ?></span>
+                    <span class="footer-credit">Design by <a href="https://noninestudio.com" target="_blank" rel="noopener noreferrer">NO9 STUDIO</a></span>
                 </div>
             </footer>
         </div>
